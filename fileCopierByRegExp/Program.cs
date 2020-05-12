@@ -54,7 +54,6 @@ namespace fileCopierByRegExp
             //System.Console.WriteLine();
             int chk = 0;
             int cpd = 0;
-            bool deletLine = false;
             foreach (string fullFileName in fileList)
             {
                 chk++;
@@ -64,22 +63,13 @@ namespace fileCopierByRegExp
                     cpd++;
                     try{ File.Copy(fullFileName, args[1] + "\\" + fileName); }
                     catch (Exception ex)
-                    { if (deletLine) ClearCurrentConsoleLine(); System.Console.WriteLine($"{fileName} file coping error. " + ex.Message); deletLine = false; }
+                    {System.Console.WriteLine($"{fileName} file coping error. " + ex.Message);}
                     
                 }
-                if (deletLine)ClearCurrentConsoleLine();
-                System.Console.WriteLine($"{chk} files checked. {cpd} files copied");
-                deletLine = true;
-
+                System.Console.Write($"{chk} files checked. {cpd} files copied");
+                Console.SetCursorPosition(0, Console.CursorTop);
             }
             Console.ReadKey();
-        }
-        public static void ClearCurrentConsoleLine()
-        {
-            int currentLineCursor = Console.CursorTop-1;
-            Console.SetCursorPosition(0, Console.CursorTop);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, currentLineCursor);
         }
     }
 }
